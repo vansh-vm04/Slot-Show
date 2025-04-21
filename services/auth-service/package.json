@@ -1,5 +1,5 @@
 {
-  "name": "booking",
+  "name": "auth-service",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -9,11 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mongoose": "^8.13.2"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }

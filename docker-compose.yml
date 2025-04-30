@@ -1,0 +1,22 @@
+services:
+  db-service:
+    image: postgres
+    restart: always
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: db
+      POSTGRES_PASSWORD: db
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  db_pgdata:

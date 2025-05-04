@@ -15,7 +15,7 @@ const Movie = sequelize.define(
             allowNull:false,
         },
         rating:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.FLOAT,
             allowNull:false
         },
         posterURL:{
@@ -37,6 +37,15 @@ const Movie = sequelize.define(
         },
         genre:{
             type:DataTypes.ARRAY(DataTypes.STRING)
+        },
+        venue:{
+            type:DataTypes.STRING
+        },
+        price:{
+            type:DataTypes.INTEGER
+        },
+        ageLimit:{
+            type:DataTypes.INTEGER
         }
     },
     { freezeTableName: true }

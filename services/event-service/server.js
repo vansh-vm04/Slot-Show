@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const movieRoutes = require('./routes/movieRoutes')
+const eventRoutes = require('./routes/eventRoutes')
 
 app.use(express.json());
 
-app.use('/api',movieRoutes)
+app.use('/api',eventRoutes);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

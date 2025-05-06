@@ -4,12 +4,11 @@ const {DataTypes} = require('sequelize');
 const Movie = sequelize.define(
     "Movie",
     {
-        id:{
-            type:DataTypes.STRING,
-            allowNull:false,
-            unique:true,
-            primaryKey:true
-        },
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true
+          },
         title:{
             type:DataTypes.STRING,
             allowNull:false,
@@ -46,6 +45,9 @@ const Movie = sequelize.define(
         },
         ageLimit:{
             type:DataTypes.INTEGER
+        },
+        theatre:{
+            type:DataTypes.UUID
         }
     },
     { freezeTableName: true }

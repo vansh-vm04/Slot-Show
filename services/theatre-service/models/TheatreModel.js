@@ -15,10 +15,15 @@ const Theatre = sequelize.define("Theatre", {
     type:DataTypes.STRING
   },
   seatLayoutId:{
-    type:DataTypes.UUID
+    type:DataTypes.UUID,
+    allowNull:true,
+    references:{
+      model:'SeatLayout',
+      key:'id'
+    }
   }
 },
 {freezeTableName:true}
 );
 
-module.exports = Theatre
+module.exports = {Theatre}

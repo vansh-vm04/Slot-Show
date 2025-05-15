@@ -2,7 +2,7 @@ const { sequelize } = require("../config/db");
 const {DataTypes} = require('sequelize');
 
 const SeatLayout = sequelize.define(
-    'SeatLayout',
+    "SeatLayout",
     {
         id: {
             type: DataTypes.UUID,
@@ -15,6 +15,6 @@ const SeatLayout = sequelize.define(
           }
     },
     {freezeTableName:true}
-)
+);
 
-module.exports = SeatLayout
+module.exports = {SeatLayout}

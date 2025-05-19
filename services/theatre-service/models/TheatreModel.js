@@ -9,7 +9,8 @@ const Theatre = sequelize.define("Theatre", {
     primaryKey: true,
   },
   name:{
-    type:DataTypes.STRING
+    type:DataTypes.STRING,
+    unique:true
   },
   location:{
     type:DataTypes.STRING

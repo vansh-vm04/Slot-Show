@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const {checkConnection} = require('./config/db')
 const seatLayoutRouter = require('./routes/seatLayoutRoutes')
 const theatreRouter = require('./routes/theatreRoutes')

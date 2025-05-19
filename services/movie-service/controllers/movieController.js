@@ -1,4 +1,6 @@
 const {Movie} = require('../models/MovieModel')
+const {configDotenv} = require('dotenv')
+configDotenv();
 
 const createMovie = async (req,res)=>{
     try {
@@ -23,6 +25,29 @@ const movieDetails = async (req,res)=>{
     }
 }
 
+const assignTheatre = async (req,res)=>{
+    try {
+        const movieId = await req.params.id;
+        const {theatreId} = await req.body;
+        console.log(theatreId)
+        if(!movieId) res.status(404).json({message:"Movie id required"})
+        const movie = await Movie.findByPk(movieId);
+        if(!movie) res.status(404).json({message:"Movie not exist"})
+        const response = await fetch(`${process.env.THEATRE_SERVICE_URL}/api/view/theatre/${theatreId}`,
+            {method:'GET'}
+        );
+        if(!response.ok) res.status(404).json({message:"Theatre does not exists"});
+        const {theatre} =  await response.json();
+        console.log(theatre);
+        movie.theatre = theatre.id;
+        await movie.save();
+        res.status(200).json({message:"Assigned successfully"});
+    } catch (error) {
+        res.status(500).json({message:"Internal server error"})
+        console.log(error)
+    }
+}
+
 const getAllMovies = async (req,res)=>{
     try {
         await Movie.sync();
@@ -33,4 +58,4 @@ const getAllMovies = async (req,res)=>{
     }
 }
 
-module.exports = {createMovie, movieDetails,getAllMovies}
+module.exports = {createMovie, movieDetails,getAllMovies, assignTheatre}

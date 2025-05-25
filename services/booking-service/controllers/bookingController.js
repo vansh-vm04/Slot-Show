@@ -23,4 +23,28 @@ const allBookings = async(req,res)=>{
     }
 }
 
-module.exports = {newBooking,allBookings}
+const getBookingById = async(req,res)=>{
+    try {
+        const bookingId = req.params.id;
+        const booking = await BookingModel.getBookingById(bookingId);
+        if(!booking) res.status(400).json({message:"Booking not found"});
+        res.status(200).json({message:"Booking found",booking:booking});
+    } catch (error) {
+        res.status(500).json({message:"Internal server error"});
+        console.log(error)
+    }
+}
+
+const getBookingByUserId = async(req,res)=>{
+    try {
+        const userid = req.params.userid;
+        const booking = await BookingModel.getBookingByUserId(userid);
+        if(!booking) res.status(400).json({message:"Bookings not found"});
+        res.status(200).json({message:"Bookings found",booking:booking});
+    } catch (error) {
+        res.status(500).json({message:"Internal server error"});
+        console.log(error)
+    }
+}
+
+module.exports = {newBooking,allBookings,getBookingById,getBookingByUserId}

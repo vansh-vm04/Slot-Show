@@ -26,6 +26,17 @@ const BookingModel = {
     console.log(data)
     return data;
   },
+
+  async getBookingById(id){
+    const booking = await pool.query(`SELECT * FROM Booking WHERE id = $1;`,[id]);
+    return booking.rows[0];
+  },
+
+  async getBookingByUserId(userid){
+    const query = 'SELECT * FROM Booking WHERE userid = $1;';
+    const booking = await pool.query(query,[userid]);
+    return booking.rows;
+  }
 }
 
 module.exports = BookingModel;

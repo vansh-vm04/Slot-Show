@@ -1,21 +1,26 @@
-const express = require('express')
-const app = express()
-const port = 3001
-const {checkConnection} = require('./config/db')
-const seatLayoutRouter = require('./routes/seatLayoutRoutes')
-const theatreRouter = require('./routes/theatreRoutes')
+const http = require('http')
+const app = require('./app')
 
-checkConnection();
+const {Server} = require('socket.io')
 
-app.use(express.json());
+const port = 3001;
+const server = http.createServer(app);
 
-app.use('/api',seatLayoutRouter)
-app.use('/api',theatreRouter)
+const io = new Server(server,{
+    cors:'*'
+});
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.set("io",io);
+
+io.on('connection',(socket)=>{
+    console.log("New Socket connected",socket.id);
+
+    socket.on("disconnect",()=>{
+        console.log("Client disconnected",socket.id);
+    });
+});
+
+server.listen(port,()=>{
+    console.log("Server is listening on port 3001")
 })
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`)
-})

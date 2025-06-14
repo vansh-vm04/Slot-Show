@@ -7,7 +7,8 @@ CREATE TABLE Booking (
   eventid UUID,          
   seat VARCHAR(10),      
   price INTEGER NOT NULL,
-  status VARCHAR(50) NOT NULL
+  status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  payment_status VARCHAR(50) NOT NULL DEFAULT 'pending'
 );
 CREATE INDEX IF NOT EXISTS idx_booking_userid ON Booking(userid);
 CREATE INDEX IF NOT EXISTS idx_booking_movieid ON Booking(movieid);

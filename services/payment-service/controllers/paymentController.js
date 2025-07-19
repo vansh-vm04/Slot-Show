@@ -3,13 +3,13 @@ const crypto = require('crypto')
 const PaymentModel = require('../models/PaymentModel')
 
 exports.createOrder = async(req,res)=>{
-    const {bookingId, amount} = req.body;
-    if(!bookingId || !amount) return res.status(400).json({message:"Amount and booking id are required"});
+    const {amount} = req.body;
+    if(!amount) return res.status(400).json({message:"Amount is required"});
     try {
         const options = {
             amount:amount*100,
             currency:"INR",
-            receipt: `rcpt_${bookingId}`
+            receipt: `rcpt_${Date.now()}`
         }
         const order = await razorpay.orders.create(options);
         res.status(200).json({
@@ -26,7 +26,7 @@ exports.createOrder = async(req,res)=>{
 }
 
 exports.verifyPayment = async(req,res)=>{
-    const {razorpay_order_id,razorpay_payment_id,razorpay_signature, booking_id, user_id} = req.body;
+    const {razorpay_order_id,razorpay_payment_id,razorpay_signature, user_id, booking_data} = req.body;
     if(!razorpay_order_id || !razorpay_payment_id || !razorpay_signature){
         return res.status(400).json({message:"Payment failed"})
     }
@@ -45,7 +45,14 @@ exports.verifyPayment = async(req,res)=>{
             created_at
         } = payment_details;
         const paid_at = new Date(created_at*1000);
-        const payment = await PaymentModel.createPayment(booking_id,user_id,'razorpay',razorpay_payment_id,amount,currency,status,method,paid_at);
+        const newBooking = await fetch(`${process.env.BOOKING_SERVICE_URL}/user/new-booking`,
+            {
+                method:"POST",
+                body:JSON.stringify(booking_data)
+            }
+        )
+        if(!newBooking) return res.status(500).json({message:"Booking failed with internal error"})
+        const payment = await PaymentModel.createPayment(newBooking.id,user_id,'razorpay',razorpay_payment_id,amount,currency,status,method,paid_at);
         res.status(200).json({message:"Payment success",success:true,payment:payment});
     } catch (error) {
         res.status(500).json({message:"Payment failed"});

@@ -20,6 +20,13 @@ const User = sequelize.define(
     avatar:{
       type : DataTypes.STRING,
       allowNull:true
+    },
+    password:{
+      type:DataTypes.STRING,
+      allowNull:true
+    },
+    role:{
+      type:DataTypes.STRING
     }
   },
   { freezeTableName: true }

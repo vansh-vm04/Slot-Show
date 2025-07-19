@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: auth_pass
       POSTGRES_DB: auth_db
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - auth_pgdata:/var/lib/postgresql/data
 

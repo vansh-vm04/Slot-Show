@@ -47,4 +47,6 @@ const getBookingByUserId = async(req,res)=>{
     }
 }
 
+const 
+
 module.exports = {newBooking,allBookings,getBookingById,getBookingByUserId}

@@ -16,11 +16,13 @@ const googleStrategy = passport.use(new GoogleStrategy({
         // await User.sync({ force: true });
         const user = await User.findOne({where:{id:profile.id}});
         if(!user){
+            const role = profile.email===process.env.ADMIN_MAIL ? "admin" : "user";
             const newUser = await User.create({
                 id:profile.id,
                 name:profile.displayName,
                 email:profile.email,
-                avatar:profile.picture
+                avatar:profile.picture,
+                role:role
             });
             console.log('New User saved to database')
             return done(null,newUser);
